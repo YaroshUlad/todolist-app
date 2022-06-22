@@ -12,7 +12,7 @@ export enum ACTIONS_TYPES {
 }
 
 
-type ActionTypes = setTasksAT | deleteTaskAT |
+export type ActionTypes = setTasksAT | deleteTaskAT |
     updateTaskAT | createNewTaskAT | setToDoListsAT | deleteToDoListAT |
     addToDoListAT
 

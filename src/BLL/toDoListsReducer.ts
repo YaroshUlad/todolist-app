@@ -7,7 +7,7 @@ enum ACTIONS_TYPES {
     updateToDoListTitle = 'UPDATE_TO_DO_LIST_TITLE',
 }
 
-type ActionsTypes = setTDListsAT | createNewTDListAT | deleteTDListAT | updateToDoListTitleAT
+export type ActionsTypesTDL = setTDListsAT | createNewTDListAT | deleteTDListAT | updateToDoListTitleAT
 
 export const setTDListsAC = (toDoLists: ToDoListsReducerStateType) => {
     return {
@@ -49,7 +49,7 @@ type ToDoListsReducerStateType = ToDoListType[]
 const initialState = [] as ToDoListsReducerStateType
 
 
-export const toDoListsReducer = (state: ToDoListsReducerStateType = initialState, action: ActionsTypes): ToDoListsReducerStateType => {
+export const toDoListsReducer = (state: ToDoListsReducerStateType = initialState, action: ActionsTypesTDL): ToDoListsReducerStateType => {
     switch (action.type) {
         case ACTIONS_TYPES.setToDoLists:
             return [...state, ...action.payload]

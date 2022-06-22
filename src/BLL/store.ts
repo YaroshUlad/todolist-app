@@ -11,4 +11,5 @@ export type AppStoreType = ReturnType<typeof rootReducer>
 
 export const store = createStore(rootReducer, applyMiddleware(thunk))
 
+export type StateType = typeof store.getState
 export type DispatchType = typeof store.dispatch
