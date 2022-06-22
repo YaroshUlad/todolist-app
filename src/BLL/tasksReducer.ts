@@ -8,7 +8,7 @@ export enum ACTIONS_TYPES {
     createNewTask = 'CREATE_NEW_TASK',
 }
 
-type ActionTypes = setTasksAT | deleteTaskAT | updateTaskAT
+type ActionTypes = setTasksAT | deleteTaskAT | updateTaskAT | createNewTaskAT
 
 export const setTasksAC = (tdlId: string, data: getTasksResponseType) => {
     return {
@@ -39,12 +39,16 @@ export const updateTaskAC = (tdlId: string, taskId: string, task: TaskType) => {
 }
 type updateTaskAT = ReturnType<typeof updateTaskAC>
 
-export const createNewTaskAC = () => {
+export const createNewTaskAC = (tdlId: string, task: TaskType) => {
     return {
         type: ACTIONS_TYPES.createNewTask,
-
+        tdlId,
+        payload: {
+            ...task
+        }
     } as const
 }
+type createNewTaskAT = ReturnType<typeof createNewTaskAC>
 
 
 type TaskReducerStateType = {
@@ -74,10 +78,19 @@ export const taskReducer = (state: TaskReducerStateType = initialState, action: 
                 ...state,
                 [action.tdlId]: {
                     ...state[action.tdlId],
-                    items: state[action.tdlId].items.map(el => el.id === action.taskId ? {...action.task} : el)
+                    items: state[action.tdlId].items.map(el => el.id === action.taskId
+                        ? {...action.task}
+                        : el)
                 }
             }
-
+        case ACTIONS_TYPES.createNewTask:
+            return {
+                ...state, [action.tdlId]: {
+                    ...state[action.tdlId],
+                    items: state[action.tdlId].items.concat(action.payload),
+                    totalCount: state[action.tdlId].totalCount + 1
+                }
+            }
         default:
             return state
     }
