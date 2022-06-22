@@ -6,9 +6,29 @@ export enum ACTIONS_TYPES {
     deleteTask = 'DELETE_TASK_FROM_STATE',
     updateTask = 'UPDATE_TASK',
     createNewTask = 'CREATE_NEW_TASK',
+    setToDoLists = 'SET_TO_DO_LISTS_FOR_TASKS_REDUCER_STATE',
+    deleteToDoList = 'DELETE_KEY_AFTER_TO_DO_LIST_REMOVING'
 }
 
-type ActionTypes = setTasksAT | deleteTaskAT | updateTaskAT | createNewTaskAT
+
+type ActionTypes = setTasksAT | deleteTaskAT |
+    updateTaskAT | createNewTaskAT | setToDoListsAT | deleteToDoListAT
+
+export const setToDoListsAC = (toDoLists: string[]) => {
+    return {
+        type: ACTIONS_TYPES.setToDoLists,
+        payload: toDoLists,
+    } as const
+}
+type setToDoListsAT = ReturnType<typeof setToDoListsAC>
+
+export const deleteToDoListAC = (tdlId: string) => {
+    return {
+        type: ACTIONS_TYPES.deleteToDoList,
+        tdlId
+    } as const
+}
+type deleteToDoListAT = ReturnType<typeof deleteToDoListAC>
 
 export const setTasksAC = (tdlId: string, data: getTasksResponseType) => {
     return {
@@ -60,6 +80,13 @@ const initialState = {} as TaskReducerStateType
 
 export const taskReducer = (state: TaskReducerStateType = initialState, action: ActionTypes): TaskReducerStateType => {
     switch (action.type) {
+        case ACTIONS_TYPES.setToDoLists:
+            let emptyState = {} as TaskReducerStateType
+            action.payload.map(el => {
+                emptyState[el] = {} as getTasksResponseType
+                return el
+            })
+            return emptyState
         case ACTIONS_TYPES.setTasks:
             return {...state, ...action.payload}
         case ACTIONS_TYPES.deleteTask:
@@ -91,6 +118,9 @@ export const taskReducer = (state: TaskReducerStateType = initialState, action: 
                     totalCount: state[action.tdlId].totalCount + 1
                 }
             }
+        case ACTIONS_TYPES.deleteToDoList:
+            const {[action.tdlId]: a, ...restState} = {...state}
+            return restState
         default:
             return state
     }
