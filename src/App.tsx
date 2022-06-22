@@ -3,6 +3,8 @@ import './App.css';
 
 
 
+
+
 function App() {
     useEffect(() => {
         /*todolistAPI.getToDoLists()
@@ -11,6 +13,8 @@ function App() {
            // .then(res=> console.log(res))
     }, [])
 
+ //   const dispatch = useDispatch()
+    //dispatch(getTasksForToDoListTC('sss'))
     return (
         <div className="App">
             app

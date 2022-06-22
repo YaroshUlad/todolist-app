@@ -10,3 +10,5 @@ const rootReducer = combineReducers({
 export type AppStoreType = ReturnType<typeof rootReducer>
 
 export const store = createStore(rootReducer, applyMiddleware(thunk))
+
+export type DispatchType = typeof store.dispatch

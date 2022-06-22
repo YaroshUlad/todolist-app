@@ -7,12 +7,22 @@ export enum ACTIONS_TYPES {
     updateTask = 'UPDATE_TASK',
     createNewTask = 'CREATE_NEW_TASK',
     setToDoLists = 'SET_TO_DO_LISTS_FOR_TASKS_REDUCER_STATE',
-    deleteToDoList = 'DELETE_KEY_AFTER_TO_DO_LIST_REMOVING'
+    addToDoList = 'ADD_KEY_AFTER_ADDING_TO_DO_LIST',
+    deleteToDoList = 'DELETE_KEY_AFTER_TO_DO_LIST_REMOVING',
 }
 
 
 type ActionTypes = setTasksAT | deleteTaskAT |
-    updateTaskAT | createNewTaskAT | setToDoListsAT | deleteToDoListAT
+    updateTaskAT | createNewTaskAT | setToDoListsAT | deleteToDoListAT |
+    addToDoListAT
+
+export const addToDoListAC = (tdlId: string) => {
+    return {
+        type: ACTIONS_TYPES.addToDoList,
+        tdlId
+    } as const
+}
+type addToDoListAT = ReturnType<typeof addToDoListAC>
 
 export const setToDoListsAC = (toDoLists: string[]) => {
     return {
@@ -99,7 +109,6 @@ export const taskReducer = (state: TaskReducerStateType = initialState, action: 
             const stateCopy = {...state}
             stateCopy[action.tdlId] = tasks
             return stateCopy
-
         case ACTIONS_TYPES.updateTask:
             return {
                 ...state,
@@ -121,6 +130,14 @@ export const taskReducer = (state: TaskReducerStateType = initialState, action: 
         case ACTIONS_TYPES.deleteToDoList:
             const {[action.tdlId]: a, ...restState} = {...state}
             return restState
+        case ACTIONS_TYPES.addToDoList:
+            return {
+                ...state, [action.tdlId]: {
+                    items: [],
+                    totalCount: 0,
+                    error: null
+                }
+            }
         default:
             return state
     }
