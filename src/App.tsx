@@ -1,5 +1,7 @@
 import React, {useEffect} from 'react';
 import './App.css';
+import {AddButton} from "./components/common/AddButton/AddButton";
+import AddItemForm from "./components/common/AddItemForm/AddItemForm";
 
 
 
@@ -18,6 +20,9 @@ function App() {
     return (
         <div className="App">
             app
+            <AddItemForm cb={console.log}/>
+
+            <AddButton callback={()=>{}}/>
         </div>
     );
 }
