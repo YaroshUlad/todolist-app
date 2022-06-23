@@ -8,7 +8,7 @@ export enum ACTIONS_TYPES {
     createNewTask = 'CREATE_NEW_TASK',
     setToDoLists = 'SET_TO_DO_LISTS_FOR_TASKS_REDUCER_STATE',
     addToDoList = 'ADD_KEY_AFTER_ADDING_TO_DO_LIST',
-    deleteToDoList = 'DELETE_KEY_AFTER_TO_DO_LIST_REMOVING',
+    deleteToDoList = 'DELETE_TO_DO_LIST',
 }
 
 
