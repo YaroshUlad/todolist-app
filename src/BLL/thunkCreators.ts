@@ -1,4 +1,3 @@
-//import {DispatchType} from "./store";
 import {todolistAPI} from "../DAL/todolistAPI";
 import {
     ActionsTypesTDL,
@@ -7,8 +6,16 @@ import {
     setTDListsAC,
     updateToDoListTitleAC
 } from "./toDoListsReducer";
-import {ActionTypes, addToDoListAC, setTasksAC, setToDoListsAC} from "./tasksReducer";
-import {tasksAPI} from "../DAL/tasksAPI";
+import {
+    ActionTypes,
+    addToDoListAC,
+    createNewTaskAC,
+    deleteTaskAC,
+    setTasksAC,
+    setToDoListsAC,
+    updateTaskAC
+} from "./tasksReducer";
+import {TaskForRequestType, tasksAPI} from "../DAL/tasksAPI";
 import {ThunkAction} from "redux-thunk/es/types";
 import {StateType} from "./store";
 import {ThunkDispatch} from "redux-thunk";
@@ -70,19 +77,59 @@ export const getTasksForToDoListTC = (tdlId: string): ThunkType => {
 export const deleteToDoListTC = (tdlId: string): ThunkType => {
     return (dispatch: ThunkDispatchType) => {
         todolistAPI.deleteToDoList(tdlId)
-            .then((res)=>{
+            .then((res) => {
                 dispatch(deleteTDListAC(tdlId))
             })
-            .catch(res=>{alert(res)})
+            .catch(res => {
+                alert(res)
+            })
     }
 }
 
-export const updateToDoListTitle = (tdlId: string, title:string): ThunkType => {
+export const updateToDoListTitleTC = (tdlId: string, title: string): ThunkType => {
     return (dispatch: ThunkDispatchType) => {
-        todolistAPI.updateToDoListTitle(tdlId,title)
-            .then((res)=>{
+        todolistAPI.updateToDoListTitle(tdlId, title)
+            .then((res) => {
                 dispatch(updateToDoListTitleAC(tdlId, title))
             })
-            .catch(res=>{alert(res)})
+            .catch(res => {
+                alert(res)
+            })
+    }
+}
+
+export const createNewTaskTC = (tdlId: string, title: string): ThunkType => {
+    return (dispatch: ThunkDispatchType) => {
+        tasksAPI.createNewTask(tdlId, title)
+            .then(res => {
+                dispatch(createNewTaskAC(tdlId, res.data.item))
+            })
+            .catch(res => {
+                alert(res)
+            })
+    }
+}
+
+export const deleteTaskTC = (tdlId: string, taskId: string): ThunkType => {
+    return (dispatch: ThunkDispatchType) => {
+        tasksAPI.deleteTask(tdlId, taskId)
+            .then(res => {
+                dispatch(deleteTaskAC(tdlId, taskId))
+            })
+            .catch(res => {
+                alert(res)
+            })
+    }
+}
+
+export const updateTaskTC = (tdlId: string, taskId: string, task: TaskForRequestType): ThunkType => {
+    return (dispatch: ThunkDispatchType) => {
+        tasksAPI.updateTask(tdlId, taskId, task)
+            .then(res => {
+                dispatch(updateTaskAC(tdlId, taskId, res.data.item))
+            })
+            .catch(res => {
+                alert(res)
+            })
     }
 }
