@@ -2,9 +2,11 @@ import React, {FC, memo, useCallback} from 'react';
 import styles from './ToDoList.module.css'
 import {useDispatch, useSelector} from "react-redux";
 import {AppStoreType} from "../../BLL/store";
-import {deleteToDoListTC, updateToDoListTitleTC} from "../../BLL/thunkCreators";
+import {createNewTaskTC, deleteToDoListTC, updateToDoListTitleTC} from "../../BLL/thunkCreators";
 import {ThunkDispatch} from "redux-thunk";
 import TitleArea from "./TitleArea/TitleArea";
+import AddItemForm from "../common/AddItemForm/AddItemForm";
+import {TasksArea} from "./TasksArea/TasksArea";
 
 type ToDoListPropsType = {
     tdlId: string
@@ -15,7 +17,8 @@ export const ToDoList: FC<ToDoListPropsType> = memo((props) => {
     const {tdlId} = props
 
     const dispatch = useDispatch<ThunkDispatch<AppStoreType, any, any>>()
-    const toDoListTitle = useSelector<AppStoreType, string>(state => state.toDoLists.filter(el=> el.id === tdlId)[0].title)
+    const toDoListTitle = useSelector<AppStoreType, string>(state => state.toDoLists.filter(el => el.id === tdlId)[0].title)
+
 
     const updateToDoListTitle = useCallback((title: string) => {
         dispatch(updateToDoListTitleTC(tdlId, title))
@@ -23,10 +26,14 @@ export const ToDoList: FC<ToDoListPropsType> = memo((props) => {
     const deleteToDoList = useCallback(() => {
         dispatch(deleteToDoListTC(tdlId))
     }, [dispatch])
+    const addNewTask = useCallback((title: string) => {
+        dispatch(createNewTaskTC(tdlId, title))
+    }, [dispatch])
     return (
         <div>
             <TitleArea title={toDoListTitle} updateTitle={updateToDoListTitle} deleteToDoList={deleteToDoList}/>
-
+            <AddItemForm cb={addNewTask}/>
+            <TasksArea tdlId={tdlId}/>
         </div>
     );
 })

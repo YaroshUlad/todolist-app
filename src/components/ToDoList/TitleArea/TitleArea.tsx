@@ -1,4 +1,5 @@
 import React, {FC, memo} from 'react';
+import styles from './TitleArea.module.css'
 import EditableSpan from "../../common/EditableSpan/EditableSpan";
 import {AddButton} from "../../common/AddButton/AddButton";
 
