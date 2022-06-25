@@ -1,28 +1,23 @@
-import React, {useEffect} from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import {AddButton} from "./components/common/AddButton/AddButton";
-import AddItemForm from "./components/common/AddItemForm/AddItemForm";
+// import {AddButton} from "./components/common/AddButton/AddButton";
+// import AddItemForm from "./components/common/AddItemForm/AddItemForm";
+import EditableSpan from "./components/common/EditableSpan/EditableSpan";
 
 
 
 
 
 function App() {
-    useEffect(() => {
-        /*todolistAPI.getToDoLists()
-            .then(console.log)*/
-       // tasksAPI.getTasks("6e913c7e-ece9-490c-94cd-aadcc5cc55bb")
-           // .then(res=> console.log(res))
-    }, [])
+    const[spanName, setSpanName] = useState<string>('span name')
 
- //   const dispatch = useDispatch()
-    //dispatch(getTasksForToDoListTC('sss'))
     return (
         <div className="App">
             app
-            <AddItemForm cb={console.log}/>
+            {/*<AddItemForm cb={console.log}/>
+            <AddButton callback={()=>{}}/>*/}
 
-            <AddButton callback={()=>{}}/>
+            <EditableSpan title={spanName} updateTitleOfItem={(e)=>setSpanName(e)}/>
         </div>
     );
 }
