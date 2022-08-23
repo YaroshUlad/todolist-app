@@ -1,26 +1,12 @@
-/*
-.App {
-  padding: 30px;
-  display: flex;
+.circularProgress {
+    position: fixed;
+    top: 30%;
+    display: flex;
+    justify-content: center;
+    width: 100%;
 }
-
-.App > div {
-  margin-right: 50px;
+.linearProgress {
+    position: absolute;
+    width: 100%;
+    top: 64px;
 }
-
-.error {
-  border: red 1px solid;
-}
-
-.error-message {
-  color: red;
-}
-
-.active-filter {
-  background-color: aquamarine;
-}
-
-.is-done {
-  opacity: 0.5;
-}
-*/
